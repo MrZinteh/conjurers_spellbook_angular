@@ -1,0 +1,4 @@
+<div class="flex flex-col flex-nowrap gap-5 p-2.5 font-serif text-amber-300 bg-slate-500 h-[100%]">
+  <div class="text-xl">Spells:</div>
+  <div *ngFor="let spell of spells" class="hover:cursor-pointer" (click)="handleClick(spell)">{{spell}}</div>
+</div>
