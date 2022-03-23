@@ -32,6 +32,9 @@ export class PossibleConjuresComponent implements OnInit {
   ngOnInit(): void {
     this.backEndService.feySpiritMapper();
     this.backEndService.lesserDemonMapper();
+    this.backEndService.shadowSpawnMapper();
+    this.backEndService.minorElementalMapper();
+    this.backEndService.aberrationMapper();
   }
 
 

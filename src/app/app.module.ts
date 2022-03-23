@@ -12,6 +12,9 @@ import { MinionViewerComponent } from './minion-viewer/minion-viewer.component';
 import { FindFamiliarComponent } from './find-familiar/find-familiar.component';
 import { SummonFeyComponent } from './summon-fey/summon-fey.component';
 import { SummonLesserDemonsComponent } from './summon-lesser-demons/summon-lesser-demons.component';
+import { SummonShadowspawnComponent } from './summon-shadowspawn/summon-shadowspawn.component';
+import { ConjureMinorElementalsComponent } from './conjure-minor-elementals/conjure-minor-elementals.component';
+import { SummonAberrationComponent } from './summon-aberration/summon-aberration.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { SummonLesserDemonsComponent } from './summon-lesser-demons/summon-lesse
     MinionViewerComponent,
     FindFamiliarComponent,
     SummonFeyComponent,
-    SummonLesserDemonsComponent
+    SummonLesserDemonsComponent,
+    SummonShadowspawnComponent,
+    ConjureMinorElementalsComponent,
+    SummonAberrationComponent
   ],
   imports: [
     BrowserModule,

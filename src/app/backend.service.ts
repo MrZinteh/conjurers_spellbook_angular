@@ -13,7 +13,9 @@ import {
   SUMMON_CONSTRUCT_BASE,
   SUMMON_DRACONIC_SPIRITS_BASE,
   SUMMON_ELEMENTAL_BASE,
-  SUMMON_FIEND_BASE } from './conjurations';
+  SUMMON_FIEND_BASE,
+  ELEMENTALS,
+  DEMONS} from './conjurations';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +49,7 @@ export class BackEndService {
     "Summon Lesser Demons": [],
     "Summon Shadowspawn": [],
     "Conjure Minor Elementals": [],
-    "Summon Abberation": [],
+    "Summon Aberration": [],
     "Summon Construct": [],
     "Summon Elemental": [],
     "Summon Greater Demon": [],
@@ -147,10 +149,10 @@ export class BackEndService {
           const name = demon.name;
           const type = demon.type;
           const cr: string = demon.cr.toString();
-          let base_fiend: StatCollection = SUMMON_FIEND_BASE[0];
-          for (const fiend_type of SUMMON_FIEND_BASE) {
-            if (fiend_type.name === type) {
-              base_fiend = fiend_type;
+          let base_demon: StatCollection = DEMONS[0];
+          for (const demon_ of DEMONS) {
+            if (demon_.name === name) {
+              base_demon = demon_;
             }
           }
           const crMap: {[key: string]: string} = {
@@ -159,8 +161,72 @@ export class BackEndService {
             "0.5": "1/2"
           }
           const newCr = (cr in crMap) ? crMap[cr] : cr;
-          const lesserDemon: StatCollection = { name: name, stats: {...base_fiend.stats, name: name, subName: newCr}}
+          const lesserDemon: StatCollection = { name: name, stats: {...base_demon.stats, name: name, subName: newCr}}
           this.conjurations["Summon Lesser Demons"].push(lesserDemon);
+        });
+        this.conjurationsSource.next(this.conjurations);
+      });
+  }
+
+  shadowSpawnMapper() {
+    this.getShadowSpirits()
+      .subscribe(shadowSpirits => {
+        shadowSpirits.forEach((spirit: { name: string; type: string}) => {
+          const name: string = spirit.name;
+          const type: string = spirit.type;
+          let base_shadow: StatCollection = SUMMON_SHADOWSPAWN_BASE[0];
+          for (const shadow_type of SUMMON_SHADOWSPAWN_BASE) {
+            if (shadow_type.name === type) {
+              base_shadow = shadow_type;
+            }
+          }
+          const shadowSpirit: StatCollection = { name: name, stats: {...base_shadow.stats, name: name} }
+          this.conjurations["Summon Shadowspawn"].push(shadowSpirit);
+        });
+        this.conjurationsSource.next(this.conjurations);
+      })
+  }
+
+  minorElementalMapper() {
+    this.getMinorElementals()
+      .subscribe(minorElementals => {
+        minorElementals.forEach((elemental: Monster) => {
+          const name = elemental.name;
+          const type = elemental.type;
+          const cr: string = elemental.cr.toString();
+          let base_elemental: StatCollection = ELEMENTALS[0];
+          for (const elemental_ of ELEMENTALS) {
+            if (elemental_.name === name) {
+              base_elemental = elemental_;
+            }
+          }
+          const crMap: {[key: string]: string} = {
+            "0.125": "1/8",
+            "0.25": "1/4",
+            "0.5": "1/2"
+          }
+          const newCr = (cr in crMap) ? crMap[cr] : cr;
+          const minorElemental: StatCollection = { name: name, stats: {...base_elemental.stats, name: name, subName: newCr}}
+          this.conjurations["Conjure Minor Elementals"].push(minorElemental);
+        });
+        this.conjurationsSource.next(this.conjurations);
+      })
+  }
+
+  aberrationMapper() {
+    this.getAberrations()
+      .subscribe(aberrations => {
+        aberrations.forEach((aberration: { name: string; type: string}) => {
+          const name: string = aberration.name;
+          const type: string = aberration.type;
+          let base_aberration: StatCollection = SUMMON_ABERRATION_BASE[0];
+          for (const fey_type of SUMMON_ABERRATION_BASE) {
+            if (fey_type.name === type) {
+              base_aberration = fey_type;
+            }
+          }
+          const newAberration: StatCollection = { name: name, stats: {...base_aberration.stats, name: name} }
+          this.conjurations["Summon Aberration"].push(newAberration);
         });
         this.conjurationsSource.next(this.conjurations);
       });

@@ -33,7 +33,7 @@ interface Modifiers {
 interface Description {
   label: string,
   value: string,
-  spells: string | null
+  spells: {[key: string]: string} | null
 }
 
 interface Action {

@@ -13,7 +13,7 @@ export class SidebarComponent implements OnInit {
     "Summon Lesser Demons",
     "Summon Shadowspawn",
     "Conjure Minor Elementals",
-    "Summon Abberation",
+    "Summon Aberration",
     "Summon Construct",
     "Summon Elemental",
     "Summon Greater Demon",
