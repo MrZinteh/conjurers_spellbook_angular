@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,7 @@ import { ConjureElementalComponent } from './conjure-elemental/conjure-elemental
 import { InfernalCallingComponent } from './infernal-calling/infernal-calling.component';
 import { SummonDraconicSpiritComponent } from './summon-draconic-spirit/summon-draconic-spirit.component';
 import { SummonFiendComponent } from './summon-fiend/summon-fiend.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { SummonFiendComponent } from './summon-fiend/summon-fiend.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    CdkAccordionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
