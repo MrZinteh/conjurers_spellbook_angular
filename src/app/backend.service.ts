@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Spirit } from './spirit';
-import { Observable, Subject } from 'rxjs';
+import { catchError, Observable, Subject, Subscriber } from 'rxjs';
 import { Monster } from './monster';
 import { Minion } from './minion';
 import { StatCollection } from './stat-collection';
@@ -38,7 +38,7 @@ export class BackEndService {
   private devilsUrl = 'api/fiends/devils';
   private draconicSpiritsUrl = 'api/draconicSpirits';
   private fiendsUrl = 'api/fiends';
-  private minionsUrl = '/api/minions';
+  private minionsUrl = 'api/minions';
 
   private conjurationsSource = new Subject<{ [key: string]: StatCollection[] }>();
 
@@ -60,8 +60,17 @@ export class BackEndService {
     "Summon Fiend": []
   }
 
+  private minionsSource = new Subject<StatCollection[]>();
+
+  minions$ = this.minionsSource.asObservable();
+
+  public minions: StatCollection[] = [];
+
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    })
   };
 
   private selectedSpellSource = new Subject<string>();
@@ -120,9 +129,46 @@ export class BackEndService {
     return this.http.get<Minion[]>(this.minionsUrl);
   }
 
-  // addMinion(minion: Minion): Observable<Minion> {
-  //   return this.http.post<Minion>(this.minionsUrl, minion, this.minionsUrl);
-  // }
+  addMinion(minion: Minion): Observable<ArrayBuffer> {
+    return this.http.post<ArrayBuffer>(this.minionsUrl, minion, this.httpOptions)
+      .pipe(
+        catchError((e) => new Observable<ArrayBuffer>(subscriber => {
+          console.log(e);
+          subscriber.next(e);
+        }))
+      );
+  }
+
+  deleteMinion(name: string): Observable<ArrayBuffer> {
+    return this.http.delete<ArrayBuffer>(this.minionsUrl + '?name=' + name)
+      .pipe(
+        catchError((e) => new Observable<ArrayBuffer>(subscriber => {
+          console.log(e);
+          subscriber.next(e);
+        }))
+      );
+  }
+
+  minionMapper(): void {
+    this.minions = [];
+    this.getMinions()
+      .subscribe(minions => {
+        minions.forEach(minion => {
+          const name: string = minion.name;
+          const type: string = minion.type;
+          const spellSource: string = minion.spell_source;
+          const spell_conjures: StatCollection[] = this.conjurations[spellSource];
+          let conjuredMinion = spell_conjures[0]
+          for (const conjure of spell_conjures) {
+            if (conjure.name === name) {
+              conjuredMinion = conjure;
+            }
+          }
+          this.minions.push(conjuredMinion);
+        });
+        this.minionsSource.next(this.minions);
+      });
+  }
 
   feySpiritMapper() {
     this.getFeySpirits()

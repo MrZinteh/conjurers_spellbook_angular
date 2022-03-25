@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { BackEndService } from '../backend.service';
+import { Minion } from '../minion';
 
 @Component({
   selector: 'app-possible-conjures',
@@ -23,7 +24,6 @@ export class PossibleConjuresComponent implements OnInit {
     );
     this.backEndService.conjurations$.subscribe(
       conjuration => {
-        console.log(conjuration);
         this.conjurations = conjuration;
       }
     );
@@ -46,9 +46,13 @@ export class PossibleConjuresComponent implements OnInit {
 
 
 
-  handleClick(name: string) {
+  handleClick(name: string, type: string) {
     console.log(name);
-    console.log(this.conjurations);
+    const newMinion: Minion = { name: name, type: type, spell_source: this.selectedSpell }
+    const res = this.backEndService.addMinion(newMinion);
+    res.subscribe(_ => {
+      this.backEndService.minionMapper();
+    });
   }
 
 }

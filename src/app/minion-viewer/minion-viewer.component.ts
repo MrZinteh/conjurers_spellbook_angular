@@ -1,15 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackEndService } from '../backend.service';
 import { StatCollection } from '../stat-collection';
-import {
-  FIND_FAMILIARS,
-  SUMMON_FEY_BASE,
-  SUMMON_SHADOWSPAWN_BASE,
-  SUMMON_ABERRATION_BASE,
-  SUMMON_CONSTRUCT_BASE,
-  SUMMON_DRACONIC_SPIRITS_BASE,
-  SUMMON_ELEMENTAL_BASE,
-  SUMMON_FIEND_BASE } from '../conjurations';
 
 @Component({
   selector: 'app-minion-viewer',
@@ -17,43 +8,34 @@ import {
   styleUrls: ['./minion-viewer.component.css']
 })
 export class MinionViewerComponent implements OnInit {
-  minions: StatCollection[] = [];
+  minions: StatCollection[] = this.backEndService.minions;
+  conjurations = this.backEndService.conjurations;
 
   constructor(
     private backEndService: BackEndService
-  ) { }
+  ) {
+    this.backEndService.conjurations$.subscribe(
+      conjuration => {
+        this.conjurations = conjuration;
+      }
+    );
 
-  ngOnInit(): void {
-    this.minionMapper();
+    this.backEndService.minions$.subscribe(
+      minions => {
+        this.minions = minions;
+      }
+    );
   }
 
-  minionMapper(): void {
-    this.backEndService.getMinions()
-      .subscribe(minions => {
-        console.log(minions);
-        minions.forEach(minion => {
-          const name: string = minion.name;
-          const type: string = minion.type;
-          switch(minion.spell_source) {
-            case "Find Familiar":
-              let base_familiar: StatCollection = FIND_FAMILIARS[0];
-              for (const familiar of FIND_FAMILIARS) {
-                if (familiar.name = name) {
-                  base_familiar = familiar;
-                }
-              }
-              const newMinion: StatCollection = { name: name, stats: {...base_familiar.stats, name: name} }
-              this.minions.push(newMinion);
-              break;
-            default:
-              break;
-          }
-        })
-      });
+  ngOnInit(): void {
+    this.backEndService.minionMapper();
   }
 
   handleClick(name: string) {
-    console.log(name);
+    const res = this.backEndService.deleteMinion(name);
+    res.subscribe(_ => {
+      this.backEndService.minionMapper();
+    });
   }
 
 }
