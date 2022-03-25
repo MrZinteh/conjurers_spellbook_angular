@@ -126,7 +126,7 @@ export class BackEndService {
   feySpiritMapper() {
     this.getFeySpirits()
       .subscribe(feySpirits => {
-        feySpirits.forEach((spirit: { name: string; type: string}) => {
+        feySpirits.forEach((spirit: Spirit) => {
           const name: string = spirit.name;
           const type: string = spirit.type;
           let base_fey: StatCollection = SUMMON_FEY_BASE[0];
@@ -171,7 +171,7 @@ export class BackEndService {
   shadowSpawnMapper() {
     this.getShadowSpirits()
       .subscribe(shadowSpirits => {
-        shadowSpirits.forEach((spirit: { name: string; type: string}) => {
+        shadowSpirits.forEach((spirit: Spirit) => {
           const name: string = spirit.name;
           const type: string = spirit.type;
           let base_shadow: StatCollection = SUMMON_SHADOWSPAWN_BASE[0];
@@ -216,7 +216,7 @@ export class BackEndService {
   aberrationMapper() {
     this.getAberrations()
       .subscribe(aberrations => {
-        aberrations.forEach((aberration: { name: string; type: string}) => {
+        aberrations.forEach((aberration: Spirit) => {
           const name: string = aberration.name;
           const type: string = aberration.type;
           let base_aberration: StatCollection = SUMMON_ABERRATION_BASE[0];
@@ -235,7 +235,7 @@ export class BackEndService {
   constructMapper() {
     this.getConstructs()
       .subscribe(constructs => {
-        constructs.forEach((construct: { name: string; type: string}) => {
+        constructs.forEach((construct: Spirit) => {
           const name: string = construct.name;
           const type: string = construct.type;
           let base_construct: StatCollection = SUMMON_CONSTRUCT_BASE[0];
@@ -246,6 +246,77 @@ export class BackEndService {
           }
           const newConstruct: StatCollection = { name: name, stats: {...base_construct.stats, name: name} }
           this.conjurations["Summon Construct"].push(newConstruct);
+        });
+        this.conjurationsSource.next(this.conjurations);
+      });
+  }
+
+  elementalSpiritMapper() {
+    this.getElementals()
+      .subscribe(elementals => {
+        elementals.forEach((elemental: Spirit) => {
+          const name: string = elemental.name;
+          const type: string = elemental.type;
+          let base_elemental: StatCollection = SUMMON_ELEMENTAL_BASE[0];
+          for (const elemental_type of SUMMON_ELEMENTAL_BASE) {
+            if (elemental_type.name === type) {
+              base_elemental = elemental_type;
+            }
+          }
+          const newelemental: StatCollection = { name: name, stats: {...base_elemental.stats, name: name} }
+          this.conjurations["Summon Elemental"].push(newelemental);
+        });
+        this.conjurationsSource.next(this.conjurations);
+      })
+  }
+
+  greaterDemonMapper() {
+    this.getGreaterDemons()
+      .subscribe(greaterDemons => {
+        greaterDemons.forEach((demon: Monster) => {
+          const name = demon.name;
+          const type = demon.type;
+          const cr: string = demon.cr.toString();
+          let base_demon: StatCollection = DEMONS[0];
+          for (const demon_ of DEMONS) {
+            if (demon_.name === name) {
+              base_demon = demon_;
+            }
+          }
+          const crMap: {[key: string]: string} = {
+            "0.125": "1/8",
+            "0.25": "1/4",
+            "0.5": "1/2"
+          }
+          const newCr = (cr in crMap) ? crMap[cr] : cr;
+          const greaterDemon: StatCollection = { name: name, stats: {...base_demon.stats, name: name, subName: newCr}}
+          this.conjurations["Summon Greater Demon"].push(greaterDemon);
+        });
+        this.conjurationsSource.next(this.conjurations);
+      });
+  }
+
+  elementalMapper() {
+    this.getElementals()
+      .subscribe(elementals => {
+        elementals.forEach((elemental: Monster) => {
+          const name = elemental.name;
+          const type = elemental.type;
+          const cr: string = elemental.cr.toString();
+          let base_elemental: StatCollection = DEMONS[0];
+          for (const elemental_ of DEMONS) {
+            if (elemental_.name === name) {
+              base_elemental = elemental_;
+            }
+          }
+          const crMap: {[key: string]: string} = {
+            "0.125": "1/8",
+            "0.25": "1/4",
+            "0.5": "1/2"
+          }
+          const newCr = (cr in crMap) ? crMap[cr] : cr;
+          const conjuredElemental: StatCollection = { name: name, stats: {...base_elemental.stats, name: name, subName: newCr}}
+          this.conjurations["Conjure Elemental"].push(conjuredElemental);
         });
         this.conjurationsSource.next(this.conjurations);
       });

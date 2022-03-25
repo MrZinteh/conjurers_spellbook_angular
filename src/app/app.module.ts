@@ -16,6 +16,9 @@ import { SummonShadowspawnComponent } from './summon-shadowspawn/summon-shadowsp
 import { ConjureMinorElementalsComponent } from './conjure-minor-elementals/conjure-minor-elementals.component';
 import { SummonAberrationComponent } from './summon-aberration/summon-aberration.component';
 import { SummonConstructComponent } from './summon-construct/summon-construct.component';
+import { SummonElementalComponent } from './summon-elemental/summon-elemental.component';
+import { SummonGreaterDemonComponent } from './summon-greater-demon/summon-greater-demon.component';
+import { ConjureElementalComponent } from './conjure-elemental/conjure-elemental.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { SummonConstructComponent } from './summon-construct/summon-construct.co
     SummonShadowspawnComponent,
     ConjureMinorElementalsComponent,
     SummonAberrationComponent,
-    SummonConstructComponent
+    SummonConstructComponent,
+    SummonElementalComponent,
+    SummonGreaterDemonComponent,
+    ConjureElementalComponent
   ],
   imports: [
     BrowserModule,
