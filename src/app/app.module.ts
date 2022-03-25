@@ -19,6 +19,9 @@ import { SummonConstructComponent } from './summon-construct/summon-construct.co
 import { SummonElementalComponent } from './summon-elemental/summon-elemental.component';
 import { SummonGreaterDemonComponent } from './summon-greater-demon/summon-greater-demon.component';
 import { ConjureElementalComponent } from './conjure-elemental/conjure-elemental.component';
+import { InfernalCallingComponent } from './infernal-calling/infernal-calling.component';
+import { SummonDraconicSpiritComponent } from './summon-draconic-spirit/summon-draconic-spirit.component';
+import { SummonFiendComponent } from './summon-fiend/summon-fiend.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import { ConjureElementalComponent } from './conjure-elemental/conjure-elemental
     SummonConstructComponent,
     SummonElementalComponent,
     SummonGreaterDemonComponent,
-    ConjureElementalComponent
+    ConjureElementalComponent,
+    InfernalCallingComponent,
+    SummonDraconicSpiritComponent,
+    SummonFiendComponent
   ],
   imports: [
     BrowserModule,

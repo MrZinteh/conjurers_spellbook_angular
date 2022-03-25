@@ -15,7 +15,8 @@ import {
   SUMMON_ELEMENTAL_BASE,
   SUMMON_FIEND_BASE,
   ELEMENTALS,
-  DEMONS} from './conjurations';
+  DEMONS,
+  DEVILS} from './conjurations';
 
 @Injectable({
   providedIn: 'root'
@@ -263,11 +264,11 @@ export class BackEndService {
               base_elemental = elemental_type;
             }
           }
-          const newelemental: StatCollection = { name: name, stats: {...base_elemental.stats, name: name} }
-          this.conjurations["Summon Elemental"].push(newelemental);
+          const newElemental: StatCollection = { name: name, stats: {...base_elemental.stats, name: name} }
+          this.conjurations["Summon Elemental"].push(newElemental);
         });
         this.conjurationsSource.next(this.conjurations);
-      })
+      });
   }
 
   greaterDemonMapper() {
@@ -320,5 +321,69 @@ export class BackEndService {
         });
         this.conjurationsSource.next(this.conjurations);
       });
+  }
+
+  devilMapper() {
+    this.getDevils()
+      .subscribe(devils => {
+        devils.forEach((devil: Monster) => {
+          const name = devil.name;
+          const type = devil.type;
+          const cr: string = devil.cr.toString();
+          let base_devil: StatCollection = DEVILS[0];
+          for (const devil_ of DEVILS) {
+            if (devil_.name === name) {
+              base_devil = devil_;
+            }
+          }
+          const crMap: {[key: string]: string} = {
+            "0.125": "1/8",
+            "0.25": "1/4",
+            "0.5": "1/2"
+          }
+          const newCr = (cr in crMap) ? crMap[cr] : cr;
+          const conjuredDevil: StatCollection = { name: name, stats: {...base_devil.stats, name: name, subName: newCr}}
+          this.conjurations["Infernal Calling"].push(conjuredDevil);
+        });
+        this.conjurationsSource.next(this.conjurations);
+      });
+  }
+
+  draconicSpiritMapper() {
+    this.getDraconicSpirits()
+      .subscribe(spirits => {
+        spirits.forEach((spirit: Spirit) => {
+          const name: string = spirit.name;
+          const type: string = spirit.type;
+          let base_spirit: StatCollection = SUMMON_DRACONIC_SPIRITS_BASE[0];
+          for (const draconic_type of SUMMON_DRACONIC_SPIRITS_BASE) {
+            if (draconic_type.name === type) {
+              base_spirit = draconic_type;
+            }
+          }
+          const draconicSpirit: StatCollection = { name: name, stats: {...base_spirit.stats, name: name} }
+          this.conjurations["Summon Draconic Spirit"].push(draconicSpirit);
+        });
+        this.conjurationsSource.next(this.conjurations);
+      });
+  }
+
+  fiendMapper() {
+    this.getFiends()
+      .subscribe(fiends => {
+        fiends.forEach((fiend: Spirit) => {
+          const name: string = fiend.name;
+          const type: string = fiend.type;
+          let base_spirit: StatCollection = SUMMON_FIEND_BASE[0];
+          for (const fiendish_type of SUMMON_FIEND_BASE) {
+            if (fiendish_type.name === type) {
+              base_spirit = fiendish_type;
+            }
+          }
+          const summonedFiend: StatCollection = { name: name, stats: {...base_spirit.stats, name: name} }
+          this.conjurations["Summon Fiend"].push(summonedFiend);
+        });
+        this.conjurationsSource.next(this.conjurations);
+      })
   }
 }
