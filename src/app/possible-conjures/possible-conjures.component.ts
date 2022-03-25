@@ -35,6 +35,7 @@ export class PossibleConjuresComponent implements OnInit {
     this.backEndService.shadowSpawnMapper();
     this.backEndService.minorElementalMapper();
     this.backEndService.aberrationMapper();
+    this.backEndService.constructMapper();
   }
 
 

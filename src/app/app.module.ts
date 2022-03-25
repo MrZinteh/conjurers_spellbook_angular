@@ -15,6 +15,7 @@ import { SummonLesserDemonsComponent } from './summon-lesser-demons/summon-lesse
 import { SummonShadowspawnComponent } from './summon-shadowspawn/summon-shadowspawn.component';
 import { ConjureMinorElementalsComponent } from './conjure-minor-elementals/conjure-minor-elementals.component';
 import { SummonAberrationComponent } from './summon-aberration/summon-aberration.component';
+import { SummonConstructComponent } from './summon-construct/summon-construct.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { SummonAberrationComponent } from './summon-aberration/summon-aberration
     SummonLesserDemonsComponent,
     SummonShadowspawnComponent,
     ConjureMinorElementalsComponent,
-    SummonAberrationComponent
+    SummonAberrationComponent,
+    SummonConstructComponent
   ],
   imports: [
     BrowserModule,

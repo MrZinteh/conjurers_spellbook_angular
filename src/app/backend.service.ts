@@ -220,13 +220,32 @@ export class BackEndService {
           const name: string = aberration.name;
           const type: string = aberration.type;
           let base_aberration: StatCollection = SUMMON_ABERRATION_BASE[0];
-          for (const fey_type of SUMMON_ABERRATION_BASE) {
-            if (fey_type.name === type) {
-              base_aberration = fey_type;
+          for (const ab_type of SUMMON_ABERRATION_BASE) {
+            if (ab_type.name === type) {
+              base_aberration = ab_type;
             }
           }
           const newAberration: StatCollection = { name: name, stats: {...base_aberration.stats, name: name} }
           this.conjurations["Summon Aberration"].push(newAberration);
+        });
+        this.conjurationsSource.next(this.conjurations);
+      });
+  }
+
+  constructMapper() {
+    this.getConstructs()
+      .subscribe(constructs => {
+        constructs.forEach((construct: { name: string; type: string}) => {
+          const name: string = construct.name;
+          const type: string = construct.type;
+          let base_construct: StatCollection = SUMMON_CONSTRUCT_BASE[0];
+          for (const construct_type of SUMMON_CONSTRUCT_BASE) {
+            if (construct_type.name === type) {
+              base_construct = construct_type;
+            }
+          }
+          const newConstruct: StatCollection = { name: name, stats: {...base_construct.stats, name: name} }
+          this.conjurations["Summon Construct"].push(newConstruct);
         });
         this.conjurationsSource.next(this.conjurations);
       });
