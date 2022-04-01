@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { BackEndService } from '../backend.service';
 import { Minion } from '../minion';
+import { StatCollection } from '../stat-collection';
 
 @Component({
   selector: 'app-possible-conjures',
@@ -10,8 +11,10 @@ import { Minion } from '../minion';
 })
 export class PossibleConjuresComponent implements OnInit {
 
-  conjurations = this.backEndService.conjurations;
+  conjurations: {[key: string]: StatCollection[] } = this.backEndService.conjurations;
   selectedSpell: string = "Find Familiar";
+  conjures = this.conjurations[this.selectedSpell];
+  orderedConjures = this.conjures;
 
   constructor(
     private backEndService: BackEndService
@@ -20,11 +23,15 @@ export class PossibleConjuresComponent implements OnInit {
     this.backEndService.selectedSpell$.subscribe(
       spell => {
         this.selectedSpell = spell;
+        this.conjures = this.conjurations[this.selectedSpell];
+        this.orderedConjures = this.conjures;
       }
     );
     this.backEndService.conjurations$.subscribe(
       conjuration => {
         this.conjurations = conjuration;
+        this.conjures = this.conjurations[this.selectedSpell];
+        this.orderedConjures = this.conjures;
       }
     );
   }
@@ -47,12 +54,46 @@ export class PossibleConjuresComponent implements OnInit {
 
 
   handleClick(name: string, type: string) {
-    console.log(name);
     const newMinion: Minion = { name: name, type: type, spell_source: this.selectedSpell }
     const res = this.backEndService.addMinion(newMinion);
     res.subscribe(_ => {
       this.backEndService.minionMapper();
     });
+  }
+
+  sortConjures(sortBy: string): StatCollection[] {
+    let orderedSortable = this.conjures.sort((a, b) => {
+      const comp_a: string = a.stats.AC;
+      const comp_b: string = b.stats.AC;
+
+      const crMap: {[key: string]: number} = {
+          "1/8": 0.125,
+          "1/4": 0.25,
+          "1/2": 0.5,
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 4,
+          "5": 5,
+          "6": 6,
+          "7": 7,
+          "8": 8,
+      }
+      if (comp_a in crMap) {
+          return crMap[comp_a] - crMap[comp_b];
+      }
+      else {
+          if (comp_a < comp_b) {
+              return -1;
+          } else if (comp_a > comp_b) {
+              return 1;
+          } else {
+              return 0;
+          }
+      }
+
+    });
+    return orderedSortable;
   }
 
 }

@@ -1,10 +1,29 @@
 <div class="flex flex-wrap p-[10px]">
-  <div *ngFor="let conjure of conjurations[selectedSpell]" class="relative basis-2/5 grow shrink shadow-sb-sm hover:shadow-sb-md bg-[#fbfbf8] transition-all duration-300 m-[5px]">
+  <div class="flex flex-wrap justify-between py-[15px] w-full">
+    <mat-form-field (change)="this.sortConjures('AC')">
+      <mat-label>Sort By</mat-label>
+      <mat-select>
+        <mat-option [value]="'name'">Name</mat-option>
+        <mat-option *ngIf="orderedConjures[0].stats.subName" [value]="'subName'">Subname</mat-option>
+        <mat-option [value]="'AC'">AC</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <mat-form-field>
+        <mat-label>Filter By</mat-label>
+        <mat-select>
+          <mat-option [value]="'name'">Name</mat-option>
+          <mat-option *ngIf="orderedConjures[0].stats.subName" [value]="'subName'">Subname</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div *ngFor="let conjure of orderedConjures" class="relative basis-2/5 grow shrink shadow-sb-sm hover:shadow-sb-md bg-[#fbfbf8] transition-all duration-300 m-[5px]">
     <div class="p-[20px]">
       <cdk-accordion>
         <cdk-accordion-item #accordionItem="cdkAccordionItem" [attr.id]="'accordion-header'">
           <div (click)="accordionItem.toggle()">
-            <h3 class="block font-normal text-[#822000] text-[1.17em]">{{conjure.stats.name}}</h3>
+            <h3 class="block font-normal text-[#822000] text-[1.17em]">{{conjure.stats.name}} <span *ngIf="conjure.stats.subName">({{conjure.stats.subName}})</span></h3>
             <div class="italic text-[14px]">{{conjure.stats.size}} {{conjure.stats.type}}</div>
             <div class="flex gap-[10px] text-[rgb(130, 32, 0)] text-[14px]">
               <div><span class="font-bold">AC</span><span> {{conjure.stats.AC}}</span></div>
