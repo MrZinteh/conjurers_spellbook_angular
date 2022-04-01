@@ -15,6 +15,9 @@ export class PossibleConjuresComponent implements OnInit {
   selectedSpell: string = "Find Familiar";
   conjures = this.conjurations[this.selectedSpell];
   orderedConjures = this.conjures;
+  selectedSort: string = "name";
+  selectedFilter: string = "name";
+  filterText: string = "";
 
   constructor(
     private backEndService: BackEndService
@@ -24,14 +27,15 @@ export class PossibleConjuresComponent implements OnInit {
       spell => {
         this.selectedSpell = spell;
         this.conjures = this.conjurations[this.selectedSpell];
-        this.orderedConjures = this.conjures;
+        this.orderedConjures = this.conjurations[this.selectedSpell];
+        this.selectedSort = "name"
       }
     );
     this.backEndService.conjurations$.subscribe(
       conjuration => {
         this.conjurations = conjuration;
         this.conjures = this.conjurations[this.selectedSpell];
-        this.orderedConjures = this.conjures;
+        this.orderedConjures = this.conjurations[this.selectedSpell];
       }
     );
   }
@@ -49,6 +53,7 @@ export class PossibleConjuresComponent implements OnInit {
     this.backEndService.devilMapper();
     this.backEndService.draconicSpiritMapper();
     this.backEndService.fiendMapper();
+    this.backEndService.initializeSortedConjures();
   }
 
 
@@ -61,10 +66,21 @@ export class PossibleConjuresComponent implements OnInit {
     });
   }
 
-  sortConjures(sortBy: string): StatCollection[] {
+  sortConjures(sortBy: string): void {
     let orderedSortable = this.conjures.sort((a, b) => {
-      const comp_a: string = a.stats.AC;
-      const comp_b: string = b.stats.AC;
+      let comp_a: string = a.stats.name;
+      let comp_b: string = b.stats.name;
+
+      if (sortBy === "AC") {
+        comp_a = a.stats.AC;
+        comp_b = b.stats.AC;
+      }
+      else if (sortBy === "subName") {
+        if (a.stats.subName !== null && b.stats.subName !== null) {
+          comp_a = a.stats.subName;
+          comp_b = b.stats.subName;
+        }
+      }
 
       const crMap: {[key: string]: number} = {
           "1/8": 0.125,
@@ -93,7 +109,12 @@ export class PossibleConjuresComponent implements OnInit {
       }
 
     });
-    return orderedSortable;
+    this.backEndService.sortConjures(orderedSortable, this.selectedSpell);
+  }
+
+  handleTextChange(text: string): void {
+    // TODO: Implement
+    console.log(text);
   }
 
 }

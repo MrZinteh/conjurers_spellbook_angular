@@ -60,6 +60,22 @@ export class BackEndService {
     "Summon Fiend": []
   }
 
+  public orderedConjurations: { [key: string]: StatCollection[] } = {
+    "Find Familiar": FIND_FAMILIARS,
+    "Summon Fey": [],
+    "Summon Lesser Demons": [],
+    "Summon Shadowspawn": [],
+    "Conjure Minor Elementals": [],
+    "Summon Aberration": [],
+    "Summon Construct": [],
+    "Summon Elemental": [],
+    "Summon Greater Demon": [],
+    "Conjure Elemental": [],
+    "Infernal Calling": [],
+    "Summon Draconic Spirit": [],
+    "Summon Fiend": []
+  }
+
   private minionsSource = new Subject<StatCollection[]>();
 
   minions$ = this.minionsSource.asObservable();
@@ -74,11 +90,22 @@ export class BackEndService {
   };
 
   private selectedSpellSource = new Subject<string>();
-
   selectedSpell$ = this.selectedSpellSource.asObservable();
 
-  selectSpell(spell: string) {
+  private sortBySource = new Subject<string>();
+  sortBy$ = this.sortBySource.asObservable();
+
+  selectSpell(spell: string): void {
     this.selectedSpellSource.next(spell);
+  }
+
+  sortConjures(sortedConjures: StatCollection[], spell: string): void {
+    this.orderedConjurations[spell] = sortedConjures;
+    this.conjurationsSource.next(this.orderedConjurations);
+  }
+
+  initializeSortedConjures(): void {
+    this.orderedConjurations = this.conjurations;
   }
 
   getFeySpirits(): Observable<Spirit[]> {

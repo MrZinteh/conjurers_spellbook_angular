@@ -1,8 +1,8 @@
 <div class="flex flex-wrap p-[10px]">
-  <div class="flex flex-wrap justify-between py-[15px] w-full">
-    <mat-form-field (change)="this.sortConjures('AC')">
+  <div class="flex flex-wrap justify-between px-[15px] w-full">
+    <mat-form-field>
       <mat-label>Sort By</mat-label>
-      <mat-select>
+      <mat-select [(value)]="selectedSort" (selectionChange)="sortConjures(selectedSort)">
         <mat-option [value]="'name'">Name</mat-option>
         <mat-option *ngIf="orderedConjures[0].stats.subName" [value]="'subName'">Subname</mat-option>
         <mat-option [value]="'AC'">AC</mat-option>
@@ -11,10 +11,21 @@
     <div>
       <mat-form-field>
         <mat-label>Filter By</mat-label>
-        <mat-select>
+        <mat-select [(value)]="selectedFilter">
           <mat-option [value]="'name'">Name</mat-option>
           <mat-option *ngIf="orderedConjures[0].stats.subName" [value]="'subName'">Subname</mat-option>
         </mat-select>
+      </mat-form-field>
+      <mat-form-field class="px-[5px]">
+        <mat-label>Filter:</mat-label>
+        <textarea matInput
+                  rows="1"
+                  cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="1"
+                  [value]="filterText"
+                  (change)="handleTextChange(filterText)"></textarea>
       </mat-form-field>
     </div>
   </div>
