@@ -1,0 +1,69 @@
+<div class="flex flex-wrap p-[10px]">
+  <div *ngFor="let conjure of minions" class="relative basis-2/5 grow shrink shadow-sb-sm hover:shadow-sb-md bg-[#fbfbf8] transition-all duration-300 m-[5px]">
+    <div class="p-[20px]">
+      <cdk-accordion>
+        <cdk-accordion-item #accordionItem="cdkAccordionItem" [attr.id]="'accordion-header'">
+          <div (click)="accordionItem.toggle()">
+            <h3 class="block font-normal text-[#822000] text-[1.17em]">{{conjure.stats.name}}</h3>
+            <div class="italic text-[14px]">{{conjure.stats.size}} {{conjure.stats.type}}</div>
+            <div class="flex gap-[10px] text-[rgb(130, 32, 0)] text-[14px]">
+              <div><span class="font-bold">AC</span><span> {{conjure.stats.AC}}</span></div>
+              <div><span class="font-bold">HP</span><span> {{conjure.stats.HP}}</span></div>
+              <div><span class="font-bold">Spd</span><span> {{conjure.stats.Speed}}</span></div>
+            </div>
+            <div class="flex flex-wrap leading-[19.6px] text-[14px] gap-[5px] text-center">
+              <div *ngFor="let stat of conjure.stats.Stats | keyvalue" class="block pt-[5px] text-center">
+                <div class="font-bold">{{stat.key}}</div>
+                <div>{{stat.value}}</div>
+              </div>
+            </div>
+            <div class="text-[#822000] text-[14px]">
+              <div *ngIf="conjure.stats.Skills"><span class="font-bold">Skills</span><span> {{conjure.stats.Skills}}</span></div>
+              <div *ngIf="conjure.stats.SavingThrows"><span class="font-bold">Saving Throws</span><span> {{conjure.stats.SavingThrows}}</span></div>
+              <div *ngIf="conjure.stats.DamageVulnerabilities"><span class="font-bold">Damage Vulnerabilities</span><span> {{conjure.stats.DamageVulnerabilities}}</span></div>
+              <div *ngIf="conjure.stats.DamageResistances"><span class="font-bold">Damage Resistances</span><span> {{conjure.stats.DamageResistances}}</span></div>
+              <div *ngIf="conjure.stats.DamageImmunities"><span class="font-bold">Damage Immunities</span><span> {{conjure.stats.DamageImmunities}}</span></div>
+              <div *ngIf="conjure.stats.ConditionImmunities"><span class="font-bold">Condition Immunities</span><span> {{conjure.stats.ConditionImmunities}}</span></div>
+              <div><span class="font-bold">Senses</span><span> {{conjure.stats.Senses}}</span></div>
+              <div><span class="font-bold">Languages</span><span> {{conjure.stats.Languages}}</span></div>
+            </div>
+            <div class="text-[14px]">
+              <div *ngFor="let description of conjure.stats.Description">
+                <p><em><strong>{{description.label}}</strong></em> {{description.value}}</p>
+                <div *ngIf="description.spells">
+                  <p *ngFor="let spell of description.spells | keyvalue">{{spell.key}}: <em>{{spell.value}}</em></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div [attr.id]="'accordion-body'" [style.display]="accordionItem.expanded ? '' : 'none'" *ngIf="conjure.stats.Actions">
+            <div *ngIf="conjure.stats.Actions">
+              <div class="font-bold text-[15px]">
+                <p class="my-1">Actions</p>
+              </div>
+              <div class="text-[14px]">
+                <p *ngFor="let action of conjure.stats.Actions" class="my-1"><em><strong>{{action.label}}</strong> {{action.sublabel}}</em> {{action.description}}</p>
+              </div>
+            </div>
+            <div *ngIf="conjure.stats.BonusActions">
+              <div class="font-bold text-[15px]">
+                <p class="my-1">Bonus Actions</p>
+              </div>
+              <div class="text-[14px]">
+                <p *ngFor="let bonusAction of conjure.stats.BonusActions" class="my-1"><em><strong>{{bonusAction.label}}</strong> {{bonusAction.sublabel}}</em> {{bonusAction.description}}</p>
+              </div>
+            </div>
+            <div *ngIf="conjure.stats.Reactions">
+              <div class="font-bold text-[15px]">
+                <p class="my-1">Reactions</p>
+              </div>
+              <div class="text-[14px]">
+                <p *ngFor="let reaction of conjure.stats.Reactions" class="my-1"><em><strong>{{reaction.label}}</strong> {{reaction.sublabel}}</em> {{reaction.description}}</p>
+              </div>
+            </div>
+          </div>
+        </cdk-accordion-item>
+      </cdk-accordion>
+      <button type="button" (click)="handleClick(conjure.name)" class="absolute top-1 right-1 max-w-[30px] max-h-[30px] z-10 bg-transparent border-none"><img src="../../assets/spellbook.png"/></button>
+  </div>
+</div>
