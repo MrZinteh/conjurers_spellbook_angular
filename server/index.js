@@ -9,7 +9,10 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 if (process.env.NODE_ENV === "production"){
-    app.use(express.static(path.resolve(__dirname, '../client/dist/conjurers-spellbook/index.html')));
+    app.use(express.static(path.resolve(__dirname, '../client/dist/conjurers-spellbook')));
+}
+else {
+    app.use(express.static(path.resolve(__dirname, '../client/dist/conjurers-spellbook')));
 }
 
 const jsonParser = bodyParser.json();
