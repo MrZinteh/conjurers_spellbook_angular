@@ -3,8 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { Route, RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +29,13 @@ import { InfernalCallingComponent } from './infernal-calling/infernal-calling.co
 import { SummonDraconicSpiritComponent } from './summon-draconic-spirit/summon-draconic-spirit.component';
 import { SummonFiendComponent } from './summon-fiend/summon-fiend.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+
+const ROUTES: Route[] = [
+  { path: '', component: LoginComponent },
+  { path: 'home', component: HomeComponent}
+];
 
 @NgModule({
   declarations: [
@@ -48,7 +57,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ConjureElementalComponent,
     InfernalCallingComponent,
     SummonDraconicSpiritComponent,
-    SummonFiendComponent
+    SummonFiendComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -57,8 +68,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     CdkAccordionModule,
     MatInputModule,
+    MatIconModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot(ROUTES)
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,17 @@
+<div class="h-full">
+  <div class="absolute inset-y-2/4 left-[37.5%] right-[62.5%] h-2/4 w-1/4 m-auto flex flex-col items-center">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your name</mat-label>
+      <input matInput [(ngModel)]="enteredName">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your password</mat-label>
+      <input matInput [(ngModel)]="enteredPassword" [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+    <button class="font-normal tracking-normal text-white bg-gradient-to-tr from-[#2B8472] to-[#0F977C] rounded-2xl w-[126px] h-[36px] border-none shadow-lg"
+            (click)="onLoginClick()">Enter!</button>
+  </div>
+</div>
