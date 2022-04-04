@@ -76,6 +76,22 @@ export class BackEndService {
     "Summon Fiend": []
   }
 
+  public filteredConjurations: { [key: string]: StatCollection[] } = {
+    "Find Familiar": FIND_FAMILIARS,
+    "Summon Fey": [],
+    "Summon Lesser Demons": [],
+    "Summon Shadowspawn": [],
+    "Conjure Minor Elementals": [],
+    "Summon Aberration": [],
+    "Summon Construct": [],
+    "Summon Elemental": [],
+    "Summon Greater Demon": [],
+    "Conjure Elemental": [],
+    "Infernal Calling": [],
+    "Summon Draconic Spirit": [],
+    "Summon Fiend": []
+  }
+
   private minionsSource = new Subject<StatCollection[]>();
 
   minions$ = this.minionsSource.asObservable();
@@ -102,6 +118,28 @@ export class BackEndService {
   sortConjures(sortedConjures: StatCollection[], spell: string): void {
     this.orderedConjurations[spell] = sortedConjures;
     this.conjurationsSource.next(this.orderedConjurations);
+  }
+
+  filterConjures(filterBy: string, filterText: string, spell: string): void {
+    let filteredOrderedConjurations = this.orderedConjurations[spell];
+    if (filterBy === "name") {
+      filteredOrderedConjurations = filteredOrderedConjurations.filter((el) => {
+        return el.name.toLowerCase().includes(filterText.toLowerCase());
+      })
+    }
+    else if (filterBy === "subName") {
+      filteredOrderedConjurations = filteredOrderedConjurations.filter((el) => {
+        if (el.stats.subName !== null) {
+          return el.stats.subName.toLowerCase().includes(filterText.toLowerCase());
+        }
+        else {
+          return false;
+        }
+      })
+    }
+
+    this.filteredConjurations[spell] = filteredOrderedConjurations;
+    this.conjurationsSource.next(this.filteredConjurations);
   }
 
   initializeSortedConjures(): void {

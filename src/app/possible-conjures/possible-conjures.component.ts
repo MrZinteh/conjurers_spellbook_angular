@@ -113,8 +113,7 @@ export class PossibleConjuresComponent implements OnInit {
   }
 
   handleTextChange(text: string): void {
-    // TODO: Implement
-    console.log(text);
+    this.backEndService.filterConjures(this.selectedFilter, text, this.selectedSpell);
   }
 
 }

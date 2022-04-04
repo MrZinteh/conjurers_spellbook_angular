@@ -24,8 +24,8 @@
                   #autosize="cdkTextareaAutosize"
                   cdkAutosizeMinRows="1"
                   cdkAutosizeMaxRows="1"
-                  [value]="filterText"
-                  (change)="handleTextChange(filterText)"></textarea>
+                  [(ngModel)]="filterText"
+                  (ngModelChange)="handleTextChange($event)"></textarea>
       </mat-form-field>
     </div>
   </div>
