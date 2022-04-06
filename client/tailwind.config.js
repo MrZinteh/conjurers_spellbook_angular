@@ -12,7 +12,9 @@ module.exports = {
       },
       backgroundImage: {
         'i-ritual': "url(https://www.dndbeyond.com/content/1-0-1862-0/skins/waterdeep/images/icons/core_mechanics/ritual.svg)",
-        'i-concentration': "url(https://www.dndbeyond.com/content/1-0-1869-0/skins/waterdeep/images/icons/core_mechanics/concentration.svg)"
+        'i-concentration': "url(https://www.dndbeyond.com/content/1-0-1869-0/skins/waterdeep/images/icons/core_mechanics/concentration.svg)",
+        // 'spell-circle': "url(/src/assets/spell_circle.jpg)"
+        'spell-circle': "url(https://wallpaperaccess.com/full/3740916.jpg)"
       },
       boxShadow: {
         'sb-sm': '0 0px 8px 0 rgba(0, 0, 0, 0.2)',

@@ -1,17 +1,20 @@
-<div class="h-full">
-  <div class="absolute inset-y-2/4 left-[37.5%] right-[62.5%] h-2/4 w-1/4 m-auto flex flex-col items-center">
-    <mat-form-field appearance="fill">
-      <mat-label>Enter your name</mat-label>
-      <input matInput [(ngModel)]="enteredName">
+<div class="h-full w-full bg-spell-circle bg-no-repeat bg-center">
+  <div class="absolute inset-y-2/4 left-[37.5%] right-[62.5%] h-1/4 w-1/4 m-auto flex flex-col items-center">
+    <mat-form-field appearance="fill" class="pt-[10px]" class="text-amber-300 bg-slate-500 rounded-md mb-[20px]">
+      <mat-label class="text-amber-300 font-serif">Enter your name</mat-label>
+      <input matInput [(ngModel)]="enteredName" class="text-amber-300 bg-slate-500">
+      <button mat-icon-button matSuffix class="text-amber-300 bg-slate-500">
+        <mat-icon>cruelty_free</mat-icon>
+      </button>
     </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Enter your password</mat-label>
-      <input matInput [(ngModel)]="enteredPassword" [type]="hide ? 'password' : 'text'">
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+    <mat-form-field appearance="fill" class="text-amber-300 bg-slate-500 rounded-md">
+      <mat-label class="text-amber-300 font-serif">Enter your password</mat-label>
+      <input matInput [(ngModel)]="enteredPassword" [type]="hide ? 'password' : 'text'" class="text-amber-300 bg-slate-500">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" class="text-amber-300 bg-slate-500">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field>
-    <button class="font-normal tracking-normal text-white bg-gradient-to-tr from-[#2B8472] to-[#0F977C] rounded-2xl w-[126px] h-[36px] border-none shadow-lg"
+    <button class="font-serif tracking-normal text-amber-300 bg-gradient-to-tr from-slate-500 to-slate-600 rounded-2xl w-[126px] h-[36px] border-none shadow-lg mt-[20px]"
             (click)="onLoginClick()">Enter!</button>
   </div>
 </div>
