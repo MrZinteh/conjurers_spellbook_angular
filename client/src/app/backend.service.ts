@@ -415,8 +415,8 @@ export class BackEndService {
           const name = elemental.name;
           const type = elemental.type;
           const cr: string = elemental.cr.toString();
-          let base_elemental: StatCollection = DEMONS[0];
-          for (const elemental_ of DEMONS) {
+          let base_elemental: StatCollection = ELEMENTALS[0];
+          for (const elemental_ of ELEMENTALS) {
             if (elemental_.name === name) {
               base_elemental = elemental_;
             }
