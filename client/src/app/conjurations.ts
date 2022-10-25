@@ -1977,11 +1977,10 @@ export const DEMONS: StatCollection[] = [
       ConditionImmunities: "Charmed, Frightened, Poisoned",
       Senses: "Darkvision 60ft., Pas. Perception 9",
       Languages: "Abyssal understands but can’t speak",
-      Description: [
-          {label: "Disgorge (Recharge 6).", value: "The demon vomits in a 15-foot cube. Each creature in that area must succeed on a DC 11 Dexterity saving throw or take 11 (2d10) acid damage and fall prone in the spew.", spells: null}
-      ],
+      Description: [],
       Actions: [
           {label: "Bite.", sublabel: "Melee Weapon Attack:", description: "+4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage."},
+          {label: "Disgorge (Recharge 6).", sublabel: "", description: "The demon vomits in a 15-foot cube. Each creature in that area must succeed on a DC 11 Dexterity saving throw or take 11 (2d10) acid damage and fall prone in the spew."}
       ],
       BonusActions: null,
       Reactions: null
