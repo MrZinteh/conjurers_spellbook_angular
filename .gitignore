@@ -8,6 +8,8 @@
 
 # Node
 /node_modules
+/client/node_modules/*
+/client/node_modules/__ngcc_entry_points__.json
 npm-debug.log
 yarn-error.log
 
@@ -30,12 +32,14 @@ yarn-error.log
 
 # Miscellaneous
 /.angular/cache
+/client/.angular/cache
 .sass-cache/
 /connect.lock
 /coverage
 /libpeerconnection.log
 testem.log
 /typings
+.env
 
 # System files
 .DS_Store
