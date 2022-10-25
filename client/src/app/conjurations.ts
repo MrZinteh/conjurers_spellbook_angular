@@ -1978,7 +1978,7 @@ export const DEMONS: StatCollection[] = [
       Senses: "Darkvision 60ft., Pas. Perception 9",
       Languages: "Abyssal understands but can’t speak",
       Description: [
-          {label: "Rampage.", value: "When it reduces a creature to 0 hit points with a melee attack on its turn, the maw demon can take a bonus action to move up to half its speed and make a bite attack.", spells: null}
+          {label: "Disgorge (Recharge 6).", value: "The demon vomits in a 15-foot cube. Each creature in that area must succeed on a DC 11 Dexterity saving throw or take 11 (2d10) acid damage and fall prone in the spew.", spells: null}
       ],
       Actions: [
           {label: "Bite.", sublabel: "Melee Weapon Attack:", description: "+4 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) piercing damage."},
